@@ -1,0 +1,745 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#111322">
+<title>HASBI - My Virtual Companion</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap');
+
+:root {
+  --bg:#111322;
+  --panel:#1b1e32;
+  --panel2:#242840;
+  --purple:#a995ff;
+  --pink:#f0a5cf;
+  --white:#f4f1ff;
+  --muted:#999bb7;
+}
+
+* {box-sizing:border-box}
+
+body {
+  margin:0;
+  background:var(--bg);
+  color:var(--white);
+  font-family:'DM Sans',sans-serif;
+  min-height:100vh;
+}
+
+button,input {font:inherit}
+button {cursor:pointer}
+
+.app {
+  max-width:1100px;
+  margin:auto;
+  min-height:100vh;
+  padding-bottom:90px;
+}
+
+header {
+  padding:22px 20px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.logo {
+  font-family:Outfit;
+  font-weight:800;
+  font-size:23px;
+  letter-spacing:2px;
+}
+
+.logo span {color:var(--purple)}
+
+.online {
+  font-size:12px;
+  color:#9be8c2;
+}
+
+.page {
+  display:none;
+  padding:10px 18px 25px;
+  animation:fade .25s ease;
+}
+
+.page.active {display:block}
+
+@keyframes fade {
+  from {opacity:0;transform:translateY(8px)}
+  to {opacity:1;transform:translateY(0)}
+}
+
+.hero {
+  background:linear-gradient(135deg,#282a49,#49385e);
+  border-radius:24px;
+  padding:25px;
+  min-height:310px;
+  position:relative;
+  overflow:hidden;
+}
+
+.hero:before {
+  content:"";
+  position:absolute;
+  width:230px;
+  height:230px;
+  background:#a995ff22;
+  border-radius:50%;
+  right:-60px;
+  top:-80px;
+}
+
+.hero h1 {
+  font-family:Outfit;
+  font-size:29px;
+  margin:0 0 8px;
+}
+
+.hero p {
+  color:#d0cbe8;
+  font-size:14px;
+  max-width:270px;
+  line-height:1.6;
+}
+
+.character {
+  height:205px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  position:relative;
+  z-index:1;
+}
+
+.avatar {
+  font-size:100px;
+  filter:drop-shadow(0 10px 20px #0005);
+  animation:float 3s infinite ease-in-out;
+}
+
+@keyframes float {
+  50% {transform:translateY(-10px)}
+}
+
+.speech {
+  background:#ffffff15;
+  padding:12px 15px;
+  border-radius:14px;
+  font-size:13px;
+  margin-top:5px;
+}
+
+.section-title {
+  font-family:Outfit;
+  font-size:20px;
+  margin:25px 0 14px;
+}
+
+.grid {
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:12px;
+}
+
+.tile {
+  background:var(--panel);
+  border:1px solid #ffffff0c;
+  border-radius:17px;
+  padding:17px;
+  text-align:left;
+  color:white;
+}
+
+.tile .emoji {
+  font-size:27px;
+  display:block;
+  margin-bottom:10px;
+}
+
+.tile strong {font-size:14px}
+.tile small {color:var(--muted);display:block;margin-top:5px}
+
+.panel {
+  background:var(--panel);
+  padding:18px;
+  border-radius:19px;
+  margin-bottom:15px;
+}
+
+.chatbox {
+  height:53vh;
+  min-height:300px;
+  overflow-y:auto;
+  display:flex;
+  flex-direction:column;
+  gap:13px;
+  padding:10px 0;
+}
+
+.msg {
+  max-width:85%;
+  padding:12px 15px;
+  border-radius:17px;
+  font-size:14px;
+  line-height:1.5;
+}
+
+.msg.bot {
+  background:var(--panel2);
+  align-self:flex-start;
+}
+
+.msg.user {
+  background:#6959a7;
+  align-self:flex-end;
+}
+
+.chat-input {
+  display:flex;
+  gap:8px;
+}
+
+.chat-input input {
+  flex:1;
+  min-width:0;
+  background:var(--panel2);
+  border:1px solid #ffffff15;
+  border-radius:13px;
+  color:white;
+  padding:13px;
+  outline:none;
+}
+
+.action {
+  border:0;
+  border-radius:13px;
+  padding:12px 16px;
+  background:var(--purple);
+  color:#171329;
+  font-weight:700;
+}
+
+.secondary {
+  background:var(--panel2);
+  color:white;
+  border:1px solid #ffffff15;
+}
+
+.story-choice {
+  display:block;
+  width:100%;
+  margin:10px 0;
+  padding:15px;
+  border-radius:13px;
+  border:1px solid #ffffff20;
+  background:var(--panel2);
+  color:white;
+  text-align:left;
+}
+
+.story-choice:active {background:#49416c}
+
+.mood {
+  display:flex;
+  justify-content:space-around;
+  gap:8px;
+  margin:15px 0;
+}
+
+.mood button {
+  background:var(--panel2);
+  border:0;
+  border-radius:13px;
+  padding:12px;
+  font-size:25px;
+}
+
+.diary-item {
+  padding:13px;
+  border-bottom:1px solid #ffffff12;
+  font-size:13px;
+}
+
+nav {
+  position:fixed;
+  bottom:0;
+  left:0;
+  right:0;
+  background:#191b2cf2;
+  backdrop-filter:blur(15px);
+  border-top:1px solid #ffffff12;
+  display:flex;
+  justify-content:center;
+  z-index:10;
+}
+
+.nav-inner {
+  width:100%;
+  max-width:700px;
+  display:flex;
+  justify-content:space-around;
+  padding:10px 4px;
+}
+
+.nav-btn {
+  background:none;
+  border:0;
+  color:var(--muted);
+  font-size:11px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:5px;
+  min-width:55px;
+}
+
+.nav-btn span {font-size:21px}
+.nav-btn.active {color:var(--purple)}
+
+.placeholder {
+  text-align:center;
+  color:var(--muted);
+  padding:35px 15px;
+  border:1px dashed #ffffff30;
+  border-radius:18px;
+}
+
+.setting-row {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:15px 0;
+  border-bottom:1px solid #ffffff12;
+}
+
+@media(min-width:700px) {
+  .hero {min-height:400px}
+  .character {height:250px}
+  .grid {grid-template-columns:repeat(4,1fr)}
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+<header>
+  <div class="logo">HASBI<span>.</span></div>
+  <div class="online">● Companion Online</div>
+</header>
+
+<!-- HOME -->
+<section id="home" class="page active">
+
+  <div class="hero">
+    <h1>Hello, welcome back!</h1>
+    <p>Your virtual companion is waiting for you.</p>
+
+    <div class="character">
+      <div class="avatar" id="avatar">👦🏻</div>
+    </div>
+
+    <div class="speech" id="homeSpeech">
+      "Hai! Akhirnya kamu datang juga."
+    </div>
+  </div>
+
+  <div class="section-title">Your Companion</div>
+
+  <div class="panel">
+    <h3 style="margin:0">Hasbi</h3>
+    <p style="color:var(--muted);font-size:13px">
+      Virtual companion · Level 1
+    </p>
+    <button class="action" onclick="showPage('chat')">
+      Talk with Hasbi →
+    </button>
+  </div>
+
+  <div class="section-title">Explore</div>
+
+  <div class="grid">
+    <button class="tile" onclick="showPage('chat')">
+      <span class="emoji">💬</span>
+      <strong>Chat</strong>
+      <small>Start a conversation</small>
+    </button>
+
+    <button class="tile" onclick="showPage('story')">
+      <span class="emoji">📖</span>
+      <strong>Story</strong>
+      <small>Explore stories</small>
+    </button>
+
+    <button class="tile" onclick="showPage('diary')">
+      <span class="emoji">📔</span>
+      <strong>Diary</strong>
+      <small>Daily memories</small>
+    </button>
+
+    <button class="tile" onclick="showPage('wardrobe')">
+      <span class="emoji">👕</span>
+      <strong>Wardrobe</strong>
+      <small>Customize Hasbi</small>
+    </button>
+  </div>
+</section>
+
+<!-- CHAT -->
+<section id="chat" class="page">
+  <h2 class="section-title">💬 Chat with Hasbi</h2>
+
+  <div class="panel">
+    <div class="chatbox" id="chatbox">
+      <div class="msg bot">
+        Hai! Aku Hasbi. Hari ini kamu mau cerita apa?
+      </div>
+    </div>
+
+    <div class="chat-input">
+      <input id="chatInput" placeholder="Ketik pesan..." 
+      onkeydown="if(event.key==='Enter')sendMessage()">
+
+      <button class="action" onclick="sendMessage()">➤</button>
+    </div>
+
+    <div style="display:flex;gap:8px;margin-top:10px">
+      <button class="action secondary" onclick="startVoice()">
+        🎤 Voice
+      </button>
+      <button class="action secondary" onclick="clearChat()">
+        Clear
+      </button>
+    </div>
+    <small id="voiceStatus" style="color:var(--muted)"></small>
+  </div>
+</section>
+
+<!-- STORY -->
+<section id="story" class="page">
+  <h2 class="section-title">📖 Story Mode</h2>
+
+  <div class="panel">
+    <div style="font-size:50px;text-align:center">🌙</div>
+    <h3 id="storyTitle">A Quiet Evening</h3>
+    <p id="storyText" style="line-height:1.8;color:#d0cbe8">
+      Malam ini Hasbi sedang duduk di kamarnya.
+      Ketika kamu datang, dia langsung menyapamu.
+      "Hei, kamu mau menghabiskan waktu denganku?"
+    </p>
+
+    <div id="storyChoices">
+      <button class="story-choice" onclick="storyNext(1)">
+        A. Mengobrol dengannya
+      </button>
+      <button class="story-choice" onclick="storyNext(2)">
+        B. Mengajaknya keluar
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- DIARY -->
+<section id="diary" class="page">
+  <h2 class="section-title">📔 Memory Diary</h2>
+
+  <div class="panel">
+    <h3>How are you feeling today?</h3>
+    <div class="mood">
+      <button onclick="saveMood('😊')">😊</button>
+      <button onclick="saveMood('🥰')">🥰</button>
+      <button onclick="saveMood('😐')">😐</button>
+      <button onclick="saveMood('😔')">😔</button>
+      <button onclick="saveMood('😴')">😴</button>
+    </div>
+    <small style="color:var(--muted)">Pilih mood kamu hari ini.</small>
+  </div>
+
+  <div class="panel">
+    <h3>Memories</h3>
+    <div id="diaryList"></div>
+  </div>
+</section>
+
+<!-- WARDROBE -->
+<section id="wardrobe" class="page">
+  <h2 class="section-title">👕 Wardrobe</h2>
+
+  <div class="placeholder">
+    <div style="font-size:55px">👦🏻</div>
+    <h3>Hasbi's Closet</h3>
+    <p>Karakter dan pakaian bisa ditambahkan di tahap berikutnya.</p>
+    <p>Coming soon ✨</p>
+  </div>
+</section>
+
+<!-- SETTINGS -->
+<section id="settings" class="page">
+  <h2 class="section-title">⚙️ Settings</h2>
+
+  <div class="panel">
+    <div class="setting-row">
+      <span>Companion Name</span>
+      <strong>Hasbi</strong>
+    </div>
+    <div class="setting-row">
+      <span>Version</span>
+      <strong>1.0.0</strong>
+    </div>
+    <div class="setting-row">
+      <span>Storage</span>
+      <strong>Local Device</strong>
+    </div>
+    <button class="action secondary" style="margin-top:15px"
+      onclick="resetApp()">
+      Reset Application
+    </button>
+  </div>
+</section>
+
+</div>
+
+<!-- NAVIGATION -->
+<nav>
+  <div class="nav-inner">
+    <button class="nav-btn active" onclick="showPage('home',this)">
+      <span>⌂</span>Home
+    </button>
+    <button class="nav-btn" onclick="showPage('chat',this)">
+      <span>💬</span>Chat
+    </button>
+    <button class="nav-btn" onclick="showPage('story',this)">
+      <span>📖</span>Story
+    </button>
+    <button class="nav-btn" onclick="showPage('diary',this)">
+      <span>📔</span>Diary
+    </button>
+    <button class="nav-btn" onclick="showPage('settings',this)">
+      <span>⚙️</span>Settings
+    </button>
+  </div>
+</nav>
+
+<script>
+const $ = id => document.getElementById(id);
+
+function showPage(page,btn) {
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  $(page).classList.add('active');
+
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+
+  if(btn) btn.classList.add('active');
+  else {
+    const nav = document.querySelector(
+      `.nav-btn[onclick*="'${page}'"]`
+    );
+    if(nav) nav.classList.add('active');
+  }
+
+  if(page==='diary') renderDiary();
+}
+
+let history = JSON.parse(localStorage.getItem('hasbiChat') || '[]');
+
+function saveHistory() {
+  localStorage.setItem('hasbiChat',JSON.stringify(history));
+}
+
+function addMessage(text,type) {
+  history.push({text,type});
+  saveHistory();
+
+  const box = $('chatbox');
+  const div = document.createElement('div');
+  div.className='msg '+type;
+  div.textContent=text;
+  box.appendChild(div);
+  box.scrollTop=box.scrollHeight;
+}
+
+function loadHistory() {
+  history.forEach(m=>{
+    const div=document.createElement('div');
+    div.className='msg '+m.type;
+    div.textContent=m.text;
+    $('chatbox').appendChild(div);
+  });
+}
+
+function sendMessage() {
+  const input=$('chatInput');
+  const message=input.value.trim();
+  if(!message)return;
+
+  input.value='';
+  addMessage(message,'user');
+
+  setTimeout(()=>{
+    const answer=getReply(message);
+    addMessage(answer,'bot');
+    speak(answer);
+  },650);
+}
+
+function getReply(message) {
+  const m=message.toLowerCase();
+
+  if(m.includes('halo') || m.includes('hai'))
+    return 'Hai juga! Senang kamu datang. Ada cerita apa hari ini?';
+
+  if(m.includes('sedih') || m.includes('capek') || m.includes('lelah'))
+    return 'Sepertinya harimu cukup berat. Mau cerita? Aku siap mendengarkan.';
+
+  if(m.includes('nama'))
+    return 'Namaku Hasbi! Senang bisa menjadi teman virtualmu.';
+
+  if(m.includes('kamu'))
+    return 'Aku Hasbi, companion virtual yang siap menemanimu di sini!';
+
+  if(m.includes('terima kasih'))
+    return 'Sama-sama! Senang bisa membantu kamu.';
+
+  if(m.includes('cerita'))
+    return 'Tentu! Aku siap mendengarkan ceritamu. Mulai dari mana saja.';
+
+  if(m.includes('pagi'))
+    return 'Selamat pagi! Semoga hari ini menyenangkan.';
+
+  if(m.includes('malam'))
+    return 'Selamat malam! Jangan lupa istirahat yang cukup ya.';
+
+  return 'Hmm, aku mendengarkan. Ceritakan lebih banyak lagi, ya!';
+}
+
+function clearChat() {
+  if(!confirm('Hapus seluruh percakapan?'))return;
+  history=[];
+  saveHistory();
+  $('chatbox').innerHTML='';
+  addMessage('Hai! Aku Hasbi. Mau ngobrol apa hari ini?','bot');
+}
+
+function speak(text) {
+  if(!('speechSynthesis' in window))return;
+  speechSynthesis.cancel();
+  const utterance=new SpeechSynthesisUtterance(text);
+  utterance.lang='id-ID';
+  utterance.rate=1;
+  speechSynthesis.speak(utterance);
+}
+
+function startVoice() {
+  const SpeechRecognition=window.SpeechRecognition ||
+                         window.webkitSpeechRecognition;
+
+  if(!SpeechRecognition) {
+    $('voiceStatus').textContent=
+      'Browser belum mendukung voice input.';
+    return;
+  }
+
+  const recognition=new SpeechRecognition();
+  recognition.lang='id-ID';
+  recognition.interimResults=false;
+
+  $('voiceStatus').textContent='Mendengarkan...';
+
+  recognition.onresult=e=>{
+    $('chatInput').value=e.results[0][0].transcript;
+    $('voiceStatus').textContent='Suara berhasil dikenali.';
+    sendMessage();
+  };
+
+  recognition.onerror=()=>{
+    $('voiceStatus').textContent='Mikrofon gagal digunakan.';
+  };
+
+  recognition.start();
+}
+
+function storyNext(choice) {
+  $('storyTitle').textContent='A Little Memory';
+
+  if(choice===1) {
+    $('storyText').textContent=
+      'Hasbi tersenyum. "Aku suka saat kita bisa mengobrol seperti ini. Bagaimana harimu tadi?"';
+  } else {
+    $('storyText').textContent=
+      'Hasbi berdiri dan mengambil jaketnya. "Wah, jalan-jalan malam? Kedengarannya menyenangkan!"';
+  }
+
+  $('storyChoices').innerHTML=`
+    <button class="story-choice" onclick="storyNext(3)">
+      Lanjutkan cerita →
+    </button>
+  `;
+
+  if(choice===3) {
+    $('storyText').textContent=
+      'Hasbi tertawa kecil. "Terima kasih sudah menghabiskan waktu bersamaku hari ini."';
+    $('storyChoices').innerHTML=`
+      <button class="story-choice" onclick="resetStory()">Main lagi</button>
+    `;
+  }
+}
+
+function resetStory() {
+  $('storyTitle').textContent='A Quiet Evening';
+  $('storyText').textContent=
+    'Malam ini Hasbi sedang duduk di kamarnya. Ketika kamu datang, dia langsung menyapamu. "Hei, kamu mau menghabiskan waktu denganku?"';
+
+  $('storyChoices').innerHTML=`
+    <button class="story-choice" onclick="storyNext(1)">A. Mengobrol dengannya</button>
+    <button class="story-choice" onclick="storyNext(2)">B. Mengajaknya keluar</button>
+  `;
+}
+
+let diary=JSON.parse(localStorage.getItem('hasbiDiary')||'[]');
+
+function saveMood(mood) {
+  diary.unshift({
+    mood,
+    date:new Date().toLocaleString('id-ID')
+  });
+
+  localStorage.setItem('hasbiDiary',JSON.stringify(diary));
+  renderDiary();
+  alert('Mood berhasil disimpan!');
+}
+
+function renderDiary() {
+  $('diaryList').innerHTML='';
+
+  if(diary.length===0) {
+    $('diaryList').textContent='Belum ada kenangan.';
+    return;
+  }
+
+  diary.forEach(item=>{
+    const div=document.createElement('div');
+    div.className='diary-item';
+    div.textContent=item.mood+'  '+item.date;
+    $('diaryList').appendChild(div);
+  });
+}
+
+function resetApp() {
+  if(!confirm('Reset semua data aplikasi?'))return;
+  localStorage.removeItem('hasbiChat');
+  localStorage.removeItem('hasbiDiary');
+  location.reload();
+}
+
+loadHistory();
+renderDiary();
+</script>
+
+</body>
+</html>
