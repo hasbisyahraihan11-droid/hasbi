@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Companion ♡ - Hasbi 2D Anime VTuber</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Canvas Avatar & Stage -->
+        <canvas id="vtuberCanvas"></canvas>
+
+        <!-- Top Header UI -->
+        <header class="header-ui">
+            <div class="title-group">
+                <h1>My Companion ♡</h1>
+                <p>ANDROID • 2D ANIME • ONLINE AI</p>
+            </div>
+            <div class="header-badge">
+                <span class="status-dot"></span>
+                <span>Hasbi siap menemani</span>
+            </div>
+        </header>
+
+        <!-- Expression Control Panel -->
+        <aside class="sidebar-right">
+            <h2 class="section-title">✦ Ekspresi</h2>
+            <div class="expression-grid">
+                <button class="expr-btn active" data-expression="normal">
+                    <span class="icon">😊</span>
+                    <span>Normal</span>
+                </button>
+                <button class="expr-btn" data-expression="happy">
+                    <span class="icon">😄</span>
+                    <span>Senang</span>
+                </button>
+                <button class="expr-btn" data-expression="sad">
+                    <span class="icon">🥺</span>
+                    <span>Sedih</span>
+                </button>
+                <button class="expr-btn" data-expression="angry">
+                    <span class="icon">😫</span>
+                    <span>Marah</span>
+                </button>
+                <button class="expr-btn" data-expression="shy">
+                    <span class="icon">☺️</span>
+                    <span>Malu</span>
+                </button>
+                <button class="expr-btn" data-expression="surprised">
+                    <span class="icon">😳</span>
+                    <span>Kaget</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Interactive Dialogue Box -->
+        <main class="dialogue-container">
+            <div class="character-name">Hasbi ♡</div>
+            <p class="dialogue-text" id="dialogueText">Hai! Aku Hasbi. Aku di sini buat nemenin kamu ngobrol. ♡</p>
+            <div class="dialogue-controls">
+                <form id="chatForm" class="chat-input-box">
+                    <input type="text" id="userInput" class="chat-input" placeholder="Tulis pesan untuk Hasbi..." autocomplete="off">
+                    <button type="submit" class="action-btn">💬 Kirim</button>
+                </form>
+            </div>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
