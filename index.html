@@ -342,8 +342,20 @@ nav {
     <p>Your virtual companion is waiting for you.</p>
 
     <div class="character">
-      <div class="avatar" id="avatar">👦🏻</div>
-    </div>
+  <div class="avatar-stage" id="avatarStage">
+    <div id="avatarFallback">👦🏻</div>
+    <img id="hasbiImage" alt="Hasbi Character">
+  </div>
+</div>
+
+<div class="expression-tools">
+  <label for="characterUpload" class="action">
+    📷 Upload Karakter
+  </label>
+  <input type="file" id="characterUpload"
+    accept="image/png,image/webp,image/jpeg"
+    hidden>
+</div>
 
     <div class="speech" id="homeSpeech">
       "Hai! Akhirnya kamu datang juga."
