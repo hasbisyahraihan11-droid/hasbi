@@ -1,0 +1,43 @@
+.avatar-stage {
+  width:220px;
+  height:220px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  position:relative;
+}
+
+#avatarFallback {
+  font-size:110px;
+  animation:float 3s infinite ease-in-out;
+}
+
+#hasbiImage {
+  display:none;
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  filter:drop-shadow(0 12px 20px #0005);
+  animation:float 3s infinite ease-in-out;
+}
+
+#hasbiImage.visible {
+  display:block;
+}
+
+.expression-tools {
+  text-align:center;
+  margin-top:10px;
+}
+
+#hasbiImage.happy {
+  filter:drop-shadow(0 12px 20px #0005) brightness(1.08);
+}
+
+#hasbiImage.surprised {
+  transform:scale(1.04);
+}
+
+#hasbiImage.sleepy {
+  filter:brightness(.8);
+}
