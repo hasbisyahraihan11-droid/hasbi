@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#211532">
+<meta name="description" content="My Companion - teman VTuber 3D pribadi">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="icon" href="/icon.svg" type="image/svg+xml">
+<title>My Companion — VRM AI</title>
+<style>
+:root{--bg:#100c19;--panel:#21182fdd;--panel2:#332348;--line:#a98ac966;--lav:#e2c4ff;--pink:#f2a9e9;--text:#fff6ff;--muted:#cbbbd8;--good:#9de6c2;--bad:#ff9aab}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 50% 0,#493361 0,#1c1428 48%,#0e0b16 100%);color:var(--text);font:15px system-ui,-apple-system,Segoe UI,sans-serif;min-height:100vh}
+button,input,textarea,select{font:inherit}button{border:1px solid var(--line);border-radius:13px;padding:10px 13px;color:white;background:linear-gradient(135deg,#7956a1,#493164);cursor:pointer}button:disabled{opacity:.45;cursor:not-allowed}.top{display:flex;justify-content:space-between;align-items:center;padding:14px max(14px,env(safe-area-inset-right)) 12px max(14px,env(safe-area-inset-left));max-width:1400px;margin:auto}.brand{font:italic 30px Georgia;color:#f1d8ff;text-shadow:0 0 18px #c68bff}.brand small{display:block;font:11px system-ui;color:var(--muted);font-style:normal;letter-spacing:1px}.top-actions{display:flex;gap:8px}.layout{max-width:1400px;margin:auto;padding:0 14px 20px;display:grid;grid-template-columns:minmax(0,1fr) 330px;gap:14px}.stage{height:min(72vh,760px);min-height:460px;position:relative;overflow:hidden;border:1px solid var(--line);border-radius:24px;background:radial-gradient(ellipse at 50% 38%,#9078a9 0,#4c3a64 37%,#1a1729 100%);box-shadow:0 20px 55px #08040f88}.stage:before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#18122688,transparent 30%,transparent 70%,#18122688),linear-gradient(0deg,#120d1ddd,transparent 55%);pointer-events:none;z-index:1}#avatarCanvas{width:100%;height:100%;display:block;touch-action:pan-y}.stage-hud{position:absolute;z-index:2;top:13px;left:14px;right:14px;display:flex;justify-content:space-between;gap:8px;pointer-events:none}.pill{background:#21182fbb;border:1px solid var(--line);padding:7px 11px;border-radius:99px;font-size:12px;backdrop-filter:blur(10px)}.drop-hint{position:absolute;z-index:2;left:50%;top:43%;transform:translate(-50%,-50%);text-align:center;width:min(86%,340px);padding:18px;background:#21182fc9;border:1px dashed #d7b4fa;border-radius:18px;pointer-events:none}.drop-hint strong{display:block;font-size:18px;color:#f0d8ff}.dialog{position:absolute;z-index:3;bottom:13px;left:13px;right:13px;padding:15px 17px;border:1px solid #e6c9ff;border-radius:17px;background:#f4eafaed;color:#352347;box-shadow:0 8px 25px #0d071a66;min-height:78px}.dialog b{color:#744c98}.dialog p{margin:5px 0 0;font-size:16px;line-height:1.4}.side{display:flex;flex-direction:column;gap:12px;min-width:0}.card{background:var(--panel);border:1px solid var(--line);border-radius:19px;padding:14px;backdrop-filter:blur(15px)}h2{font-size:16px;margin:0 0 11px;color:#f0d9ff}.muted,.hint{font-size:12px;color:var(--muted);line-height:1.5}.btnrow{display:flex;gap:8px;flex-wrap:wrap}.btnrow>*{flex:1}.field{display:grid;gap:6px;margin:9px 0}.field label{font-size:12px;color:var(--muted)}input,textarea,select{width:100%;padding:10px;border:1px solid #80669c;border-radius:11px;background:#171121;color:#fff;min-width:0}textarea{resize:vertical;min-height:68px}.expressions{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}.expr{padding:7px 3px;font-size:12px;background:#342543;text-align:center}.expr.active{outline:2px solid #edc7ff;box-shadow:0 0 15px #d28dff66}.expr span{display:block;font-size:23px;margin-bottom:2px}.chatbox{display:flex;flex-direction:column;gap:8px}.messages{height:190px;overflow:auto;display:flex;flex-direction:column;gap:8px;padding:8px;background:#120e1c88;border-radius:12px}.msg{padding:9px 11px;border-radius:12px;max-width:92%;font-size:13px;line-height:1.4;white-space:pre-wrap}.msg.user{align-self:flex-end;background:#75549a}.msg.bot{align-self:flex-start;background:#392a4c}.chatinput{display:flex;gap:7px}.chatinput input{flex:1}.chatinput button{flex:0 0 auto}.status{font-size:12px;color:var(--good);min-height:17px}.status.error{color:var(--bad)}.bottom{max-width:1400px;margin:0 auto;padding:0 14px 24px}.bottomgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.footer{text-align:center;color:#a99ab7;font-size:11px;padding:8px 12px 22px}.filebtn{display:inline-flex;align-items:center;justify-content:center;gap:7px}.hidden{display:none!important}
+@media(max-width:850px){.layout{grid-template-columns:1fr}.stage{height:62vh;min-height:430px}.side{display:grid;grid-template-columns:1fr 1fr}.side .chatcard{grid-column:1/-1}.bottomgrid{grid-template-columns:1fr}}
+@media(max-width:520px){.top{padding-top:10px}.brand{font-size:25px}.top-actions button{padding:8px 10px;font-size:12px}.layout{padding:0 9px 14px}.stage{height:58vh;min-height:400px;border-radius:18px}.side{display:flex}.dialog{left:9px;right:9px;bottom:9px;padding:12px}.dialog p{font-size:14px}.card{padding:12px}.bottom{padding:0 9px 18px}}
+</style>
+<script type="importmap">
+{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.180.0/examples/jsm/","@pixiv/three-vrm":"https://cdn.jsdelivr.net/npm/@pixiv/three-vrm@3.5.5/lib/three-vrm.module.min.js"}}
+</script>
+</head>
+<body>
+<header class="top"><div class="brand">My Companion ♡<small>ANDROID · 3D VRM · ONLINE AI</small></div><div class="top-actions"><button id="installBtn" class="hidden">＋ Install</button><button id="settingsJump">⚙ Pengaturan</button></div></header>
+<main class="layout">
+<section class="stage" id="stage">
+ <canvas id="avatarCanvas"></canvas>
+ <div class="stage-hud"><span class="pill" id="modelStatus">Avatar belum dimuat</span><span class="pill">✦ Hasbi ♡</span></div>
+ <div class="drop-hint" id="dropHint"><strong>♡ Masukkan model VRM</strong><div class="muted">Pilih file .vrm dari HP kamu untuk menampilkan avatar 3D.</div><div style="margin-top:12px"><label class="filebtn"><input id="vrmFile" type="file" accept=".vrm,model/gltf-binary" class="hidden"> <span>📂 Pilih model VRM</span></label></div></div>
+ <div class="dialog"><b id="speaker">Hasbi ♡</b><p id="dialogText">Hai! Upload model VRM kamu, lalu kita bisa mulai ngobrol. Aku siap menemanimu. ♡</p></div>
+</section>
+<aside class="side">
+ <section class="card"><h2>✧ Ekspresi</h2><div class="expressions" id="expressions">
+ <button class="expr active" data-face="neutral"><span>😌</span>Normal</button><button class="expr" data-face="happy"><span>😊</span>Senang</button><button class="expr" data-face="sad"><span>🥺</span>Sedih</button><button class="expr" data-face="angry"><span>😠</span>Marah</button><button class="expr" data-face="relaxed"><span>☺️</span>Malu</button><button class="expr" data-face="surprised"><span>😳</span>Kaget</button></div><p class="hint">Ekspresi menggunakan preset VRM jika model memilikinya.</p></section>
+ <section class="card"><h2>♫ Voice karakter</h2><div class="field"><label>Voice rekaman untuk ekspresi</label><select id="voiceFace"><option value="neutral">Normal</option><option value="happy">Senang</option><option value="sad">Sedih</option><option value="angry">Marah</option><option value="relaxed">Malu</option><option value="surprised">Kaget</option></select></div><div class="field"><input id="voiceFile" type="file" accept="audio/*"></div><div class="btnrow"><button id="recordBtn">● Rekam</button><button id="stopBtn" disabled>■ Stop</button><button id="testVoiceBtn">▶ Tes</button></div><div class="hint" id="recordStatus">Upload atau rekam suara kamu. Audio disimpan lokal di perangkat ini.</div></section>
+ <section class="card chatcard"><h2>♡ Ngobrol dengan Hasbi</h2><div class="chatbox"><div class="messages" id="messages"><div class="msg bot">Hai! Aku Hasbi. Cerita dong, hari kamu gimana? ♡</div></div><div class="chatinput"><input id="chatInput" placeholder="Tulis pesan..." maxlength="1500"><button id="sendBtn">Kirim</button></div><div class="btnrow"><button id="speakBtn">🔊 Bacakan jawaban</button><button id="clearBtn">Bersihkan chat</button></div><div class="status" id="aiStatus">AI belum diperiksa.</div></div></section>
+</aside>
+</main>
+<section class="bottom" id="settings">
+<div class="bottomgrid">
+ <section class="card"><h2>⚙ Pengaturan AI online</h2><p class="hint">API key disimpan di server (.env), bukan di browser/HP. Isi pengaturan server sebelum chat online aktif.</p><div class="field"><label>Nama companion</label><input id="companionName" value="Hasbi"></div><div class="field"><label>Gaya / kepribadian</label><textarea id="personality">Kamu Hasbi, companion virtual yang hangat, sedikit jahil, perhatian, dan berbicara dalam bahasa Indonesia santai. Jawab natural, ringkas, suportif, dan jangan mengaku sebagai manusia sungguhan.</textarea></div><div class="btnrow"><button id="saveProfile">Simpan karakter</button><button id="checkAI">Cek koneksi AI</button></div><div class="hint">Model dan API key diatur oleh pemilik server pada file .env. Default memakai endpoint kompatibel OpenAI Chat Completions.</div></section>
+ <section class="card"><h2>📱 Model 3D & perangkat</h2><div class="field"><label>Upload / ganti model VRM</label><input id="vrmFile2" type="file" accept=".vrm,model/gltf-binary"></div><div class="btnrow"><button id="resetCamera">Reset kamera</button><button id="toggleMotion">Matikan animasi</button></div><p class="hint">Saran Android: gunakan Chrome terbaru, mode landscape bila model berat, dan file VRM yang dioptimalkan (tekstur 2K atau lebih kecil). Model tidak diunggah ke server; diproses di browser.</p><p class="hint">AI chat online memerlukan internet dan server backend yang sudah diisi API key. Suara rekaman lokal adalah klip per ekspresi; untuk membaca semua teks AI dengan suara kloning diperlukan layanan TTS/voice-cloning terpisah.</p></section>
+</div>
+</section>
+<div class="footer">My Companion · VRM runtime via Three.js & @pixiv/three-vrm · API key tidak pernah dikirim ke browser</div>
+<audio id="audioPlayer"></audio>
+<script type="module">
+import * as THREE from 'three';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { VRMLoaderPlugin, VRMUtils } from '@pixiv/three-vrm';
+
+const $=id=>document.getElementById(id);
+let scene,camera,renderer,clock,vrm=null,activeFace='neutral',motion=true,recorder=null,chunks=[],voices={},lastAnswer='',lastBotFace='neutral',chatHistory=[];
+let audioContext=null,analyser=null,sourceNode=null,rafMouth=0;
+const presetMap={neutral:null,happy:'happy',sad:'sad',angry:'angry',relaxed:'relaxed',surprised:'surprised'};
+const storeKey='mc-v4-profile';
+function init3D(){
+ const canvas=$('avatarCanvas');scene=new THREE.Scene();scene.background=null;
+ camera=new THREE.PerspectiveCamera(30,1,.1,100);camera.position.set(0,1.35,3.3);
+ renderer=new THREE.WebGLRenderer({canvas,alpha:true,antialias:true,powerPreference:'low-power'});
+ renderer.setPixelRatio(Math.min(devicePixelRatio||1,1.7));renderer.outputColorSpace=THREE.SRGBColorSpace;
+ scene.add(new THREE.HemisphereLight(0xffffff,0x554066,2));
+ const key=new THREE.DirectionalLight(0xffe8ff,2.2);key.position.set(1,2,3);scene.add(key);
+ const fill=new THREE.DirectionalLight(0xa98cff,1.1);fill.position.set(-2,1,-2);scene.add(fill);
+ clock=new THREE.Clock();resize();
+ const loop=()=>{requestAnimationFrame(loop);const dt=Math.min(clock.getDelta(),.05);if(vrm){if(motion){vrm.scene.position.y=Math.sin(performance.now()*.0012)*.025;const head=vrm.humanoid?.getNormalizedBoneNode('head');if(head){head.rotation.y=Math.sin(performance.now()*.00055)*.08;head.rotation.x=Math.sin(performance.now()*.0008)*.025}}vrm.update(dt)}renderer.render(scene,camera)};loop();
+ window.addEventListener('resize',resize);
+}
+function resize(){if(!renderer)return;const r=$('stage').getBoundingClientRect();renderer.setSize(r.width,r.height,false);camera.aspect=r.width/r.height;camera.updateProjectionMatrix()}
+async function loadVRM(file){
+ if(!file)return;if(!file.name.toLowerCase().endsWith('.vrm')){alert('Pilih file dengan ekstensi .vrm');return}
+ $('modelStatus').textContent='Memuat model…';$('dropHint').classList.add('hidden');
+ const url=URL.createObjectURL(file);const loader=new GLTFLoader();loader.register(parser=>new VRMLoaderPlugin(parser));
+ loader.load(url,gltf=>{if(vrm){scene.remove(vrm.scene);VRMUtils.deepDispose(vrm.scene)}vrm=gltf.userData.vrm;if(!vrm){$('modelStatus').textContent='File bukan VRM valid';return}
+ VRMUtils.removeUnnecessaryVertices(gltf.scene);VRMUtils.removeUnnecessaryJoints(gltf.scene);scene.add(vrm.scene);
+ // Arahkan wajah model ke kamera; sebagian model VRM menghadap sumbu -Z.
+ vrm.scene.rotation.y = Math.PI;
+ const box=new THREE.Box3().setFromObject(vrm.scene);const size=box.getSize(new THREE.Vector3());const center=box.getCenter(new THREE.Vector3());vrm.scene.position.x-=center.x;vrm.scene.position.y-=box.min.y;vrm.scene.position.z-=center.z;
+ const h=Math.max(size.y,1);
+ // Framing setengah badan: fokus sekitar dada, dengan kepala tetap terlihat.
+ camera.position.set(0,h*.76,h*1.85);camera.lookAt(0,h*.68,0);camera.fov=28;camera.updateProjectionMatrix();
+ $('modelStatus').textContent='Avatar aktif · '+file.name;$('dialogText').textContent='Model berhasil dimuat! Senang bertemu denganmu. ♡';URL.revokeObjectURL(url);setFace(activeFace);
+ },p=>{if(p.total)$('modelStatus').textContent='Memuat '+Math.round(p.loaded/p.total*100)+'%'},err=>{$('modelStatus').textContent='Gagal memuat VRM';$('dropHint').classList.remove('hidden');console.error(err);alert('Model gagal dimuat. Pastikan file VRM 0.x atau 1.0 yang valid.');URL.revokeObjectURL(url)});
+}
+$('vrmFile').onchange=e=>loadVRM(e.target.files[0]);$('vrmFile2').onchange=e=>loadVRM(e.target.files[0]);
+function setFace(face){activeFace=face;document.querySelectorAll('.expr').forEach(b=>b.classList.toggle('active',b.dataset.face===face));if(!vrm?.expressionManager)return;for(const f of Object.keys(presetMap)){const name=presetMap[f];if(name)try{vrm.expressionManager.setValue(name,0)}catch{}}
+ const preset=presetMap[face];if(preset)try{vrm.expressionManager.setValue(preset,1)}catch{}}
+document.querySelectorAll('.expr').forEach(b=>b.onclick=()=>{setFace(b.dataset.face);playVoice(b.dataset.face)});
+async function loadVoices(){for(const f of Object.keys(presetMap)){const v=localStorage.getItem('mc-voice-'+f);if(v)voices[f]=v}}
+function playVoice(face=activeFace){const data=voices[face]||voices.neutral;if(!data){$('recordStatus').textContent='Belum ada rekaman untuk ekspresi ini.';return}const a=$('audioPlayer');a.src=data;a.currentTime=0;a.play().then(()=>startLipSync(a)).catch(()=>{});}
+$('voiceFile').onchange=async e=>{const f=e.target.files[0];if(!f)return;voices[$('voiceFace').value]=await fileToData(f);localStorage.setItem('mc-voice-'+$('voiceFace').value,voices[$('voiceFace').value]);$('recordStatus').textContent='Voice tersimpan untuk '+$('voiceFace').value+'.';e.target.value=''};
+function fileToData(f){return new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(r.result);r.onerror=rej;r.readAsDataURL(f)})}
+$('testVoiceBtn').onclick=()=>playVoice($('voiceFace').value);
+$('recordBtn').onclick=async()=>{try{const stream=await navigator.mediaDevices.getUserMedia({audio:true});chunks=[];recorder=new MediaRecorder(stream);recorder.ondataavailable=e=>{if(e.data.size)chunks.push(e.data)};recorder.onstop=async()=>{const blob=new Blob(chunks,{type:recorder.mimeType||'audio/webm'});const f=new File([blob],'voice.webm',{type:blob.type});voices[$('voiceFace').value]=await fileToData(f);localStorage.setItem('mc-voice-'+$('voiceFace').value,voices[$('voiceFace').value]);stream.getTracks().forEach(t=>t.stop());$('recordStatus').textContent='Rekaman tersimpan untuk '+$('voiceFace').value};recorder.start();$('recordBtn').disabled=true;$('stopBtn').disabled=false;$('recordStatus').textContent='Sedang merekam…'}catch(e){$('recordStatus').textContent='Mikrofon butuh izin dan HTTPS (atau localhost).'}};
+$('stopBtn').onclick=()=>{if(recorder&&recorder.state!=='inactive')recorder.stop();$('recordBtn').disabled=false;$('stopBtn').disabled=true};
+async function startLipSync(audio){try{audioContext??=new AudioContext();if(audioContext.state==='suspended')await audioContext.resume();if(sourceNode)try{sourceNode.disconnect()}catch{}sourceNode=audioContext.createMediaElementSource(audio);analyser=audioContext.createAnalyser();analyser.fftSize=256;sourceNode.connect(analyser);analyser.connect(audioContext.destination);const data=new Uint8Array(analyser.frequencyBinCount);const tick=()=>{if(!analyser||audio.paused)return;analyser.getByteFrequencyData(data);const avg=data.reduce((a,b)=>a+b,0)/data.length/255;try{vrm?.expressionManager?.setValue('aa',Math.min(1,avg*2.6))}catch{}rafMouth=requestAnimationFrame(tick)};tick();audio.onended=()=>{cancelAnimationFrame(rafMouth);try{vrm?.expressionManager?.setValue('aa',0)}catch{}}}catch(e){console.warn('Lip sync unavailable',e)}}
+function addMessage(text,role){const el=document.createElement('div');el.className='msg '+role;el.textContent=text;$('messages').append(el);$('messages').scrollTop=$('messages').scrollHeight}
+async function askAI(){
+ const input=$('chatInput'),text=input.value.trim();if(!text)return;input.value='';addMessage(text,'user');chatHistory.push({role:'user',content:text});$('aiStatus').textContent='Menghubungi AI…';$('aiStatus').classList.remove('error');$('sendBtn').disabled=true;
+ try{const profile=JSON.parse(localStorage.getItem(storeKey)||'{}');const r=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:text,history:chatHistory.slice(-12),name:profile.name||'Hasbi',personality:profile.personality||''})});const data=await r.json();if(!r.ok)throw new Error(data.error||'Server AI gagal');const reply=data.reply||'Maaf, aku belum bisa menjawab.';lastAnswer=reply;chatHistory.push({role:'assistant',content:reply});addMessage(reply,'bot');$('dialogText').textContent=reply;setFace(data.expression||'neutral');lastBotFace=data.expression||'neutral';$('aiStatus').textContent='AI online · balasan diterima';if(voices[lastBotFace]||voices.neutral)playVoice(lastBotFace);else if('speechSynthesis'in window){/* voice browser hanya fallback saat tombol dibacakan */}}catch(e){$('aiStatus').textContent='AI belum tersambung: '+e.message;$('aiStatus').classList.add('error');addMessage('Koneksi AI belum tersedia. Pastikan server berjalan dan .env sudah diisi API key.','bot')}finally{$('sendBtn').disabled=false}}
+$('sendBtn').onclick=askAI;$('chatInput').addEventListener('keydown',e=>{if(e.key==='Enter')askAI()});
+$('speakBtn').onclick=()=>{if(!lastAnswer)return;if('speechSynthesis'in window){speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(lastAnswer);u.lang='id-ID';u.rate=1;speechSynthesis.speak(u)}else alert('Text-to-speech tidak didukung browser ini.')};
+$('clearBtn').onclick=()=>{$('messages').innerHTML='';chatHistory=[];lastAnswer=''};
+$('checkAI').onclick=async()=>{try{const r=await fetch('/api/health');const d=await r.json();$('aiStatus').textContent=d.aiConfigured?'Server siap · AI key terpasang':'Server hidup, API key belum diatur';$('aiStatus').classList.toggle('error',!d.aiConfigured)}catch{$('aiStatus').textContent='Backend tidak terjangkau. Jalankan server Node.js.';$('aiStatus').classList.add('error')}};
+$('saveProfile').onclick=()=>{localStorage.setItem(storeKey,JSON.stringify({name:$('companionName').value,personality:$('personality').value}));$('speaker').textContent=$('companionName').value+' ♡';$('aiStatus').textContent='Profil disimpan di perangkat.'};
+$('settingsJump').onclick=()=>$('settings').scrollIntoView({behavior:'smooth'});$('resetCamera').onclick=()=>{if(vrm){const b=new THREE.Box3().setFromObject(vrm.scene),s=b.getSize(new THREE.Vector3());camera.position.set(0,s.y*.76,s.y*1.85);camera.lookAt(0,s.y*.68,0)}};
+$('toggleMotion').onclick=()=>{motion=!motion;$('toggleMotion').textContent=motion?'Matikan animasi':'Aktifkan animasi'};
+window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();window.installPrompt=e;$('installBtn').classList.remove('hidden')});$('installBtn').onclick=async()=>{if(window.installPrompt){window.installPrompt.prompt();window.installPrompt=null}else alert('Gunakan menu Chrome ⋮ lalu pilih Tambahkan ke layar utama.')};
+if('serviceWorker'in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('/sw.js').catch(console.warn));
+const saved=JSON.parse(localStorage.getItem(storeKey)||'{}');if(saved.name)$('companionName').value=saved.name;if(saved.personality)$('personality').value=saved.personality;$('speaker').textContent=(saved.name||'Hasbi')+' ♡';
+await loadVoices();init3D();
+</script>
+</body></html>
