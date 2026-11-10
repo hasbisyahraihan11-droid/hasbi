@@ -1,0 +1,17 @@
+{
+  "name": "My Companion VTuber",
+  "short_name": "Companion",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#100c19",
+  "theme_color": "#211532",
+  "description": "Companion VTuber 3D VRM dengan AI online",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
