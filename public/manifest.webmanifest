@@ -1,0 +1,8 @@
+{
+  "name": "My Companion — Hasbi",
+  "short_name": "Hasbi",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#100e1a",
+  "theme_color": "#171329"
+}

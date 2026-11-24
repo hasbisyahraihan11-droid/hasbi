@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#171329"><meta name="description" content="My Companion — teman virtual 2D Hasbi">
+<link rel="manifest" href="/manifest.webmanifest"><title>My Companion — Hasbi</title>
+<style>
+:root{--ink:#f8f3ff;--muted:#c7bdd9;--panel:#211c35eF;--line:#ffffff20;--violet:#a98bff;--pink:#f3a9d8}
+*{box-sizing:border-box}body{margin:0;background:#100e1a;color:var(--ink);font:15px/1.45 system-ui,-apple-system,Segoe UI,sans-serif;min-height:100vh}
+button,input,textarea{font:inherit}button{cursor:pointer;color:inherit;border:1px solid #ffffff24;background:linear-gradient(135deg,#7255a7,#49376d);border-radius:13px;padding:10px 13px}button:active{transform:scale(.98)}
+header{max-width:1280px;margin:auto;padding:17px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px}.logo{font:italic 27px Georgia;color:#f4d9ff}.logo small{display:block;font:10px system-ui;letter-spacing:2px;color:#bcb0d2;font-style:normal}.header-actions{display:flex;gap:8px}
+main{max-width:1280px;margin:auto;padding:0 18px 24px}.workspace{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:15px;align-items:stretch}
+.scene{height:min(75vh,780px);min-height:560px;position:relative;overflow:hidden;border-radius:25px;border:1px solid #cbb5ff35;isolation:isolate;background:
+radial-gradient(ellipse at 50% 38%,#65518c 0,#302847 35%,transparent 65%),
+linear-gradient(180deg,#28213d 0%,#1b1930 58%,#151426 100%);box-shadow:0 25px 70px #05040c99}
+.room{position:absolute;inset:0;z-index:-1;overflow:hidden;background:linear-gradient(90deg,#171426 0 8%,transparent 8% 92%,#171426 92%),linear-gradient(180deg,transparent 0 67%,#171323 67% 100%)}
+.window{position:absolute;left:7%;top:9%;width:31%;height:39%;border:8px solid #403657;border-radius:7px;background:linear-gradient(160deg,#252d54,#6a5889 48%,#d49ac0);box-shadow:0 0 35px #a98bff30}
+.window:before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent 48%,#44385d 49% 51%,transparent 52%),linear-gradient(0deg,transparent 48%,#44385d 49% 51%,transparent 52%)}
+.moon{position:absolute;right:15%;top:14%;width:32px;height:32px;border-radius:50%;background:#f3dff9;box-shadow:0 0 22px #f3dff9}
+.shelf{position:absolute;right:8%;top:17%;width:27%;height:9px;background:#57486c;box-shadow:0 45px #57486c}
+.shelf:before{content:"";position:absolute;left:15%;bottom:8px;width:35px;height:38px;background:#826b9b;border-radius:5px 5px 0 0;box-shadow:52px 9px #b18db1,100px 1px #78618e}
+.desk{position:absolute;bottom:14%;left:0;right:0;height:18%;background:linear-gradient(180deg,#45344f,#211c32);border-top:5px solid #80658c;box-shadow:0 15px 30px #090711}
+.monitor{position:absolute;right:15%;bottom:31%;width:22%;height:22%;border:7px solid #30273f;border-radius:9px;background:linear-gradient(135deg,#394b70,#9c6eaa 55%,#efacd4);box-shadow:0 0 30px #a98bff55}
+.monitor:after{content:"";position:absolute;left:45%;bottom:-23px;width:10%;height:18px;background:#554665}
+.plant{position:absolute;left:8%;bottom:29%;width:55px;height:70px;border-bottom:20px solid #57415f}
+.plant:before{content:"";position:absolute;left:15px;top:0;width:28px;height:46px;background:#63866f;border-radius:100% 0 100% 0;transform:rotate(-30deg);box-shadow:-18px 15px #719579,16px 10px #52745f}
+.floor{position:absolute;bottom:0;height:14%;width:100%;background:repeating-linear-gradient(90deg,#211a30 0 90px,#292039 91px 93px)}
+.scene:after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(0deg,#0e0c18bb,transparent 32%,transparent 78%,#17132955)}
+.character-wrap{position:absolute;z-index:2;left:50%;bottom:7%;height:86%;width:min(66%,520px);transform:translateX(-50%);display:flex;align-items:flex-end;justify-content:center;pointer-events:none}
+.avatar{height:100%;width:100%;overflow:visible;filter:drop-shadow(0 18px 28px #08061188);animation:bob 3.8s ease-in-out infinite;transform-origin:50% 100%}
+@keyframes bob{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-7px) rotate(.4deg)}}
+.avatar .ear{transform-origin:center bottom;animation:ear 4s ease-in-out infinite}
+@keyframes ear{0%,90%,100%{transform:rotate(0)}94%{transform:rotate(-5deg)}}
+.eye{transition:all .2s}.mouth{transition:all .2s}.blush{opacity:0;transition:opacity .2s}
+.face-happy .mouth{d:path("M 177 264 Q 200 294 223 264")}.face-sad .mouth{d:path("M 181 278 Q 200 260 219 278")}.face-angry .brow{stroke:#45354c;stroke-width:7}.face-shy .blush{opacity:.85}.face-surprised .mouth{d:path("M 192 262 Q 200 250 208 262 Q 210 282 200 282 Q 190 282 192 262")}
+.face-sad .eye{transform:translateY(4px)}.face-happy .eye{transform:scaleY(.3)}.face-angry .brow-left{transform:rotate(17deg);transform-origin:158px 207px}.face-angry .brow-right{transform:rotate(-17deg);transform-origin:242px 207px}
+.hud{position:absolute;z-index:4;top:15px;left:15px;right:15px;display:flex;justify-content:space-between;gap:8px}.pill{background:#171329bD;border:1px solid #ffffff24;padding:7px 11px;border-radius:30px;font-size:12px;backdrop-filter:blur(10px)}
+.dialog{position:absolute;z-index:5;bottom:16px;left:16px;right:16px;background:#171329dc;border:1px solid #ffffff22;border-radius:17px;padding:13px 16px;backdrop-filter:blur(12px);box-shadow:0 8px 30px #08061155}.dialog b{color:#f3c8ff}.dialog p{margin:4px 0 0;color:#f8f3ff}
+.panel{display:flex;flex-direction:column;gap:12px}.card{background:var(--panel);border:1px solid var(--line);border-radius:19px;padding:15px;box-shadow:0 12px 35px #08061155}.card h2{font-size:15px;margin:0 0 12px;color:#f2d9ff}.faces{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}.face-btn{padding:9px 4px;font-size:12px;background:#342849}.face-btn span{display:block;font-size:22px;margin-bottom:3px}.face-btn.active{border-color:#e4b6ff;background:#684a87;box-shadow:0 0 0 2px #d5a5ff22}
+.chatlog{height:175px;overflow:auto;display:flex;flex-direction:column;gap:8px;margin-bottom:10px}.msg{padding:8px 10px;border-radius:12px;background:#332945;font-size:13px;max-width:95%;white-space:pre-wrap;overflow-wrap:anywhere}.msg.me{align-self:flex-end;background:#594479}.chatform{display:flex;gap:7px}.chatform input{min-width:0;flex:1;background:#151222;border:1px solid #ffffff22;border-radius:12px;color:white;padding:11px}.hint{font-size:11px;color:var(--muted);margin:9px 0 0}.row{display:flex;gap:7px;flex-wrap:wrap}.row button{flex:1}.status{font-size:11px;color:#cdbfe0;margin-top:8px}.toggle{background:#332849}
+@media(max-width:850px){header{padding:13px}.workspace{grid-template-columns:1fr}.scene{height:62vh;min-height:470px}.panel{display:grid;grid-template-columns:1fr 1fr}.chat-card{grid-column:1/-1}.character-wrap{width:min(84%,500px);height:83%;bottom:10%}}
+@media(max-width:520px){main{padding:0 9px 16px}header{padding:11px 10px}.logo{font-size:23px}.header-actions button{font-size:12px;padding:8px}.scene{height:58vh;min-height:430px;border-radius:19px}.character-wrap{width:100%;height:80%;bottom:13%}.dialog{left:9px;right:9px;bottom:9px;padding:10px 12px}.dialog p{font-size:13px}.hud{top:9px;left:9px;right:9px}.panel{display:flex}.card{padding:12px}.chatlog{height:145px}}
+</style>
+</head>
+<body>
+<header><div class="logo">My Companion ♡<small>YOUR 2D VIRTUAL FRIEND</small></div><div class="header-actions"><button id="motionBtn" class="toggle">Gerakan: ON</button></div></header>
+<main><div class="workspace">
+<section class="scene">
+ <div class="room"><div class="window"><div class="moon"></div></div><div class="shelf"></div><div class="plant"></div><div class="monitor"></div><div class="desk"></div><div class="floor"></div></div>
+ <div class="hud"><span class="pill" id="status">● Hasbi siap menemani</span><span class="pill">✦ Hasbi · Fox boy</span></div>
+ <div class="character-wrap">
+ <svg id="avatar" class="avatar face-neutral" viewBox="0 0 400 520" role="img" aria-label="Hasbi, karakter anime cowok bertelinga rubah">
+ <defs>
+  <linearGradient id="hair" x2="1" y2="1"><stop stop-color="#fff"/><stop offset=".55" stop-color="#cbd1e6"/><stop offset="1" stop-color="#8c91b2"/></linearGradient>
+  <linearGradient id="hood" x2="0" y2="1"><stop stop-color="#35364f"/><stop offset="1" stop-color="#171827"/></linearGradient>
+  <linearGradient id="skin" x2="0" y2="1"><stop stop-color="#ffe1d8"/><stop offset="1" stop-color="#eebbb7"/></linearGradient>
+ </defs>
+ <!-- fox ears -->
+ <g class="ear"><path d="M111 142 Q70 13 54 26 Q44 99 91 172Z" fill="#f7f5ff" stroke="#aeb4d0" stroke-width="5"/><path d="M91 135 Q67 61 64 58 Q63 111 91 151Z" fill="#e9a9bd"/><path d="M288 142 Q330 13 347 26 Q356 99 309 172Z" fill="#f7f5ff" stroke="#aeb4d0" stroke-width="5"/><path d="M309 135 Q333 61 336 58 Q337 111 309 151Z" fill="#e9a9bd"/></g>
+ <!-- body and hoodie -->
+ <path d="M75 520 Q78 410 125 371 Q153 350 200 350 Q247 350 275 371 Q322 410 325 520Z" fill="url(#hood)" stroke="#10111e" stroke-width="7"/>
+ <path d="M125 382 Q157 416 200 416 Q243 416 275 382 L299 520 H101Z" fill="#25283d"/>
+ <path d="M164 385 Q200 430 236 385 L253 520 H147Z" fill="#44425e"/>
+ <path d="M174 390 L200 418 L226 390" fill="none" stroke="#aaa5c9" stroke-width="5"/>
+ <path d="M145 427 Q200 457 255 427" fill="none" stroke="#5e5879" stroke-width="4"/>
+ <!-- neck -->
+ <path d="M165 323 L164 378 Q200 405 236 378 L235 323Z" fill="url(#skin)"/>
+ <!-- face -->
+ <path d="M111 174 Q116 91 200 91 Q284 91 289 174 L278 271 Q266 338 200 354 Q134 338 122 271Z" fill="url(#skin)" stroke="#d7a9ac" stroke-width="3"/>
+ <!-- hair back -->
+ <path d="M104 208 Q75 94 151 63 Q235 24 292 104 Q317 148 294 237 L279 197 Q266 139 240 122 Q205 164 145 151 L121 238Z" fill="url(#hair)" stroke="#9299b7" stroke-width="4"/>
+ <!-- eyes brows -->
+ <path class="brow brow-left" d="M143 207 Q164 194 180 205" fill="none" stroke="#776b80" stroke-width="5" stroke-linecap="round"/>
+ <path class="brow brow-right" d="M220 205 Q239 194 258 207" fill="none" stroke="#776b80" stroke-width="5" stroke-linecap="round"/>
+ <g class="eye" fill="#555477"><ellipse cx="163" cy="229" rx="10" ry="14"/><ellipse cx="237" cy="229" rx="10" ry="14"/><circle cx="166" cy="224" r="3" fill="#fff"/><circle cx="240" cy="224" r="3" fill="#fff"/></g>
+ <path d="M196 250 Q200 255 204 250" fill="none" stroke="#d08e99" stroke-width="3" stroke-linecap="round"/>
+ <path class="mouth" d="M181 270 Q200 282 219 270" fill="none" stroke="#a65e72" stroke-width="4" stroke-linecap="round"/>
+ <ellipse class="blush" cx="143" cy="258" rx="18" ry="8" fill="#ef829a"/><ellipse class="blush" cx="257" cy="258" rx="18" ry="8" fill="#ef829a"/>
+ <!-- bangs -->
+ <path d="M106 190 Q92 93 162 75 Q181 69 199 82 Q209 44 242 72 Q281 88 295 167 Q267 139 248 124 Q234 158 208 177 Q211 139 197 121 Q180 169 145 183 Q152 149 145 130 Q127 158 106 190Z" fill="url(#hair)" stroke="#9ba2bd" stroke-width="4"/>
+ <path d="M148 95 Q130 123 132 154 M184 83 Q171 111 177 140 M240 88 Q260 112 266 139" fill="none" stroke="#fff" stroke-width="5" opacity=".7" stroke-linecap="round"/>
+ <!-- hoodie strings -->
+ <path d="M178 416 L173 468 M222 416 L227 468" stroke="#b6abc9" stroke-width="4" stroke-linecap="round"/>
+ <circle cx="173" cy="470" r="4" fill="#d5c7e8"/><circle cx="227" cy="470" r="4" fill="#d5c7e8"/>
+ </svg></div>
+ <div class="dialog"><b>Hasbi ♡</b><p id="say">Hai! Aku Hasbi. Mau cerita apa hari ini?</p></div>
+</section>
+<aside class="panel">
+ <section class="card"><h2>✧ Ekspresi Hasbi</h2><div class="faces">
+ <button class="face-btn active" data-face="neutral"><span>😌</span>Normal</button><button class="face-btn" data-face="happy"><span>😊</span>Senang</button><button class="face-btn" data-face="sad"><span>🥺</span>Sedih</button><button class="face-btn" data-face="angry"><span>😠</span>Marah</button><button class="face-btn" data-face="shy"><span>😳</span>Malu</button><button class="face-btn" data-face="surprised"><span>😮</span>Kaget</button>
+ </div><p class="hint">Pilih ekspresi untuk mengubah wajah Hasbi.</p></section>
+ <section class="card chat-card"><h2>♡ Ngobrol dengan Hasbi</h2><div class="chatlog" id="chatlog"><div class="msg">Hasbi: Aku siap nemenin kamu ngobrol!</div></div><form class="chatform" id="chatform"><input id="message" placeholder="Tulis pesan..." autocomplete="off"><button>Kirim</button></form><div class="status" id="chatstatus">Mode demo aktif. Atur API key di Vercel untuk AI online.</div></section>
+ <section class="card"><h2>♫ Suara</h2><div class="row"><button id="speakBtn">▶ Bacakan pesan</button><button id="voiceBtn">🎙 Bicara</button></div><p class="hint">Menggunakan suara bawaan perangkat. Fitur mikrofon memerlukan izin browser.</p></section>
+</aside>
+</div></main>
+<script>
+const avatar=document.getElementById('avatar'), say=document.getElementById('say');
+function setFace(face){avatar.setAttribute('class','avatar face-'+face);document.querySelectorAll('.face-btn').forEach(b=>b.classList.toggle('active',b.dataset.face===face));const lines={neutral:'Aku di sini, santai aja. ♡',happy:'Hehe! Aku lagi senang banget hari ini!',sad:'Hmm... boleh cerita ke aku kalau ada yang bikin sedih.',angry:'Ugh! Aku lagi sedikit kesal...',shy:'E-eh... jangan bikin aku malu dong!',surprised:'Eh?! Seriusan?!'};say.textContent=lines[face]||lines.neutral}
+document.querySelectorAll('.face-btn').forEach(b=>b.addEventListener('click',()=>setFace(b.dataset.face)));
+let moving=true;document.getElementById('motionBtn').onclick=()=>{moving=!moving;avatar.style.animation=moving?'bob 3.8s ease-in-out infinite':'none';document.getElementById('motionBtn').textContent='Gerakan: '+(moving?'ON':'OFF')};
+function addMsg(text,who){const el=document.createElement('div');el.className='msg '+(who==='me'?'me':'');el.textContent=(who==='me'?'Kamu: ':'Hasbi: ')+text;document.getElementById('chatlog').appendChild(el);document.getElementById('chatlog').scrollTop=99999}
+function localReply(s){const t=s.toLowerCase();if(/sedih|capek|lelah|cape/.test(t)){setFace('sad');return 'Sini cerita dulu. Kamu nggak harus menghadapi semuanya sendirian, ya.'}if(/senang|bahagia|hore|berhasil/.test(t)){setFace('happy');return 'Wahh, aku ikut senang dengarnya! Cerita lagi dong!'}if(/marah|kesal|benci/.test(t)){setFace('sad');return 'Aku dengerin kok. Coba ceritain apa yang bikin kamu kesal.'}setFace('neutral');return 'Oke, aku dengerin. Cerita lebih lanjut dong, aku penasaran. ♡'}
+document.getElementById('chatform').addEventListener('submit',async e=>{e.preventDefault();const input=document.getElementById('message'),v=input.value.trim();if(!v)return;addMsg(v,'me');input.value='';const status=document.getElementById('chatstatus');status.textContent='Hasbi sedang berpikir...';try{const r=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:v})});if(!r.ok)throw Error('API belum aktif');const d=await r.json();const reply=d.reply||d.choices?.[0]?.message?.content;if(!reply)throw Error('Balasan kosong');addMsg(reply);say.textContent=reply;status.textContent='AI online aktif';}catch(err){const reply=localReply(v);addMsg(reply);say.textContent=reply;status.textContent='Balasan lokal (AI online aktifkan dengan API key Vercel)';}});
+document.getElementById('speakBtn').onclick=()=>{if(!('speechSynthesis'in window)){alert('Browser belum mendukung text-to-speech');return}speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(say.textContent);u.lang='id-ID';speechSynthesis.speak(u)};
+document.getElementById('voiceBtn').onclick=()=>{const SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR){alert('Browser belum mendukung pengenalan suara. Coba Chrome.');return}const rec=new SR();rec.lang='id-ID';rec.onresult=e=>{document.getElementById('message').value=e.results[0][0].transcript;document.getElementById('message').focus()};rec.onerror=()=>alert('Mikrofon tidak dapat digunakan. Periksa izin browser.');rec.start()};
+</script>
+</body></html>
